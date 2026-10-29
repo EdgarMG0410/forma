@@ -1,0 +1,18 @@
+{
+  "extends": "@adonisjs/tsconfig/tsconfig.app.json",
+  "compilerOptions": {
+    "rootDir": "./",
+    "jsx": "react",
+    "outDir": "./build",
+    // DOM libs so the server pass can compile the inertia pages that
+    // `.adonisjs/server/pages.d.ts` imports for `inertia.render()` prop typing.
+    "lib": ["esnext", "dom", "dom.iterable"],
+    // Read by the shadcn CLI to resolve the `~/` alias in components.json.
+    "paths": {
+      "~/*": ["./inertia/*"],
+      "@generated/*": ["./.adonisjs/client/*"],
+      "@domain/*": ["./app/domain/*"]
+    }
+  },
+  "references": [{ "path": "./tsconfig.inertia.json" }]
+}

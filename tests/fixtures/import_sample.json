@@ -1,0 +1,66 @@
+{
+  "schema": "forma.workouts",
+  "version": 1,
+  "unit_default": "lb",
+  "exercises": [
+    {
+      "slug": "smith-calf-raise",
+      "name": "Pantorrilla en Smith",
+      "equipment": "smith_machine",
+      "exercise_type": "isolation",
+      "weight_basis": "total",
+      "aliases": ["pantorrilla smith"],
+      "primary_muscles": ["calves"]
+    }
+  ],
+  "sessions": [
+    {
+      "external_id": "test-2026-10-20-pierna",
+      "name": "Pierna (fixture)",
+      "date": "2026-10-20",
+      "date_confidence": "exact",
+      "exercises": [
+        {
+          "external_id": "test-2026-10-20-pierna-1",
+          "exercise_name": "Prensa",
+          "sets": [
+            { "external_id": "t1-1", "weight": 400, "unit": "lb", "reps": 12 },
+            { "external_id": "t1-2", "weight": 400, "reps": 11 },
+            { "external_id": "t1-3", "weight": null, "reps": 10, "confidence": "low" }
+          ]
+        },
+        {
+          "external_id": "test-2026-10-20-pierna-2",
+          "exercise": "smith-calf-raise",
+          "sets": [
+            { "external_id": "t2-1", "weight": 100, "unit": "lb", "reps": 15 },
+            { "external_id": "t2-2", "set_type": "warmup", "weight": 50, "unit": "lb", "reps": 20 }
+          ]
+        }
+      ]
+    },
+    {
+      "external_id": "test-2026-10-22-parcial",
+      "name": "Empuje (fixture)",
+      "date": "2026-10-22",
+      "date_confidence": "medium",
+      "status": "partial",
+      "exercises": [
+        {
+          "exercise": "bench-press",
+          "sets": [{ "external_id": "t3-1", "weight": 60, "unit": "kg", "reps": 8, "rir": 2 }]
+        }
+      ]
+    }
+  ],
+  "body_measurements": [
+    {
+      "external_id": "b-2026-10-20",
+      "date": "2026-10-20",
+      "body_weight": 180.5,
+      "body_weight_unit": "lb",
+      "waist": 84,
+      "length_unit": "cm"
+    }
+  ]
+}
