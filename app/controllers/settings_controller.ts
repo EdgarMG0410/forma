@@ -50,13 +50,6 @@ export default class SettingsController {
     const preferences = await PreferencesService.for(user)
     preferences.merge({ ...payload, aiShareBodyData: payload.aiEnabled && payload.aiShareBodyData })
     await preferences.save()
-    if (payload.theme !== 'system') {
-      response.plainCookie('forma_theme', payload.theme, {
-        encode: false,
-        maxAge: '1y',
-        httpOnly: false,
-      })
-    }
     session.flash('success', 'Preferencias guardadas.')
     return response.redirect().back()
   }

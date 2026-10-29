@@ -16,7 +16,6 @@ import {
   SelectValue,
 } from '~/components/ui/select'
 import { Switch } from '~/components/ui/switch'
-import { useTheme } from '~/hooks/use_theme'
 
 type Preferences = {
   weightUnit: WeightUnit
@@ -49,7 +48,6 @@ const GOALS: Record<TrainingGoal, string> = {
 
 export default function Settings({ profile, settings, ai }: Props) {
   const router = useRouter()
-  const { setTheme } = useTheme()
   const [prefs, setPrefs] = useState(settings)
   const [saving, setSaving] = useState(false)
   const set = <K extends keyof Preferences>(key: K, value: Preferences[K]) =>
@@ -57,7 +55,6 @@ export default function Settings({ profile, settings, ai }: Props) {
 
   const savePrefs = () => {
     setSaving(true)
-    if (prefs.theme !== 'system') setTheme(prefs.theme)
     router.put({ route: 'settings.preferences' }, prefs, {
       preserveScroll: true,
       onFinish: () => setSaving(false),
@@ -86,7 +83,7 @@ export default function Settings({ profile, settings, ai }: Props) {
                   />
                   <p className="text-xs text-muted-foreground">{profile.email}</p>
                 </div>
-                <Button type="submit" variant="outline" disabled={processing}>
+                <Button type="submit" variant="OUTLINE" disabled={processing}>
                   Guardar
                 </Button>
               </>
@@ -160,7 +157,7 @@ export default function Settings({ profile, settings, ai }: Props) {
           </div>
         </SectionCard>
 
-        <SectionCard title="Unidades y apariencia">
+        <SectionCard title="Unidades">
           <div className="grid gap-4 sm:grid-cols-2">
             <Field label="Peso">
               <Segmented
@@ -180,16 +177,6 @@ export default function Settings({ profile, settings, ai }: Props) {
                   ['in', 'in'],
                 ]}
                 onChange={(v) => set('lengthUnit', v as LengthUnit)}
-              />
-            </Field>
-            <Field label="Tema">
-              <Segmented
-                value={prefs.theme}
-                options={[
-                  ['dark', 'Oscuro'],
-                  ['light', 'Claro'],
-                ]}
-                onChange={(v) => set('theme', v as Theme)}
               />
             </Field>
             <Field label="Zona horaria">
@@ -234,7 +221,7 @@ export default function Settings({ profile, settings, ai }: Props) {
         </SectionCard>
 
         <div className="flex justify-end">
-          <Button onClick={savePrefs} disabled={saving}>
+          <Button variant="EXEC" onClick={savePrefs} disabled={saving}>
             {saving ? 'Guardando…' : 'Guardar preferencias'}
           </Button>
         </div>
@@ -300,7 +287,7 @@ export default function Settings({ profile, settings, ai }: Props) {
                     aria-invalid={!!errors.confirmation}
                   />
                 </Field>
-                <Button type="submit" variant="destructive" disabled={processing}>
+                <Button type="submit" variant="ABORT" disabled={processing}>
                   Eliminar todo
                 </Button>
                 <p className="text-xs text-muted-foreground sm:col-span-3">

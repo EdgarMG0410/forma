@@ -88,7 +88,7 @@ export default function ExerciseShow({ exercise, trend, records, recent, muscles
         description={`${EQUIPMENT_LABELS[exercise.equipment]} · ${exercise.exerciseType === 'compound' ? 'compuesto' : 'aislamiento'} · peso ${BASIS_LABELS[exercise.defaultWeightBasis].toLowerCase()}`}
         actions={
           exercise.isCustom && (
-            <Button variant="outline" onClick={() => setEditing(true)}>
+            <Button variant="OUTLINE" onClick={() => setEditing(true)}>
               <Pencil className="size-4" /> Editar
             </Button>
           )
@@ -100,7 +100,7 @@ export default function ExerciseShow({ exercise, trend, records, recent, muscles
           <Badge key={m}>{muscleName.get(m) ?? m}</Badge>
         ))}
         {exercise.secondaryMuscles.map((m) => (
-          <Badge key={m} variant="outline">
+          <Badge key={m} variant="OFFLINE">
             {muscleName.get(m) ?? m}
           </Badge>
         ))}

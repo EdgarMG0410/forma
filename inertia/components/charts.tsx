@@ -25,8 +25,8 @@ const axis = {
 function ChartTooltip({ active, payload, label, unit }: any) {
   if (!active || !payload?.length) return null
   return (
-    <div className="rounded-lg border border-border bg-popover px-3 py-2 text-xs shadow-md">
-      <div className="text-muted-foreground">{label}</div>
+    <div className="border border-[var(--border-active)] bg-[var(--surface-raised)] px-3 py-2 text-[0.7rem] shadow-[var(--glow-green)]">
+      <div className="term-label">{label}</div>
       {payload.map((p: any) => (
         <div key={p.dataKey} className="num mt-0.5 font-medium text-popover-foreground">
           {num(p.value)} {p.payload?.unit ?? unit ?? ''}
@@ -58,7 +58,7 @@ export function VolumeBars({
     <div style={{ height }} className="w-full">
       <ResponsiveContainer>
         <BarChart data={data} margin={{ top: 4, right: 0, left: 0, bottom: 0 }}>
-          <CartesianGrid vertical={false} stroke="var(--border)" />
+          <CartesianGrid vertical={false} stroke="var(--border)" strokeDasharray="2 4" />
           <XAxis dataKey={xKey} {...axis} interval="preserveStartEnd" minTickGap={8} />
           <YAxis {...axis} tickFormatter={(v) => compact(v)} width={40} />
           <Tooltip
@@ -67,7 +67,7 @@ export function VolumeBars({
           />
           <Bar
             dataKey={dataKey}
-            radius={[4, 4, 0, 0]}
+            radius={0}
             maxBarSize={36}
             shape={(props: any) => {
               const isLast = highlightLast && props.index === data.length - 1
@@ -77,7 +77,6 @@ export function VolumeBars({
                   y={props.y}
                   width={props.width}
                   height={Math.max(0, props.height)}
-                  rx={4}
                   fill={isLast ? 'var(--chart-1)' : 'var(--chart-2)'}
                   opacity={isLast ? 1 : 0.55}
                 />
@@ -107,7 +106,7 @@ export function TrendLine({
     <div style={{ height }} className="w-full">
       <ResponsiveContainer>
         <LineChart data={data} margin={{ top: 8, right: 8, left: 0, bottom: 0 }}>
-          <CartesianGrid vertical={false} stroke="var(--border)" />
+          <CartesianGrid vertical={false} stroke="var(--border)" strokeDasharray="2 4" />
           <XAxis dataKey={xKey} {...axis} minTickGap={16} />
           <YAxis {...axis} width={40} domain={['auto', 'auto']} tickFormatter={(v) => compact(v)} />
           <Tooltip content={<ChartTooltip unit={unit} />} />

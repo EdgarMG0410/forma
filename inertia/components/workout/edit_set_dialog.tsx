@@ -7,6 +7,7 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
+  DialogBody,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -96,110 +97,111 @@ export default function EditSetDialog({
             {exerciseName}. El valor original queda guardado en el historial de cambios.
           </DialogDescription>
         </DialogHeader>
-
-        <div className="grid grid-cols-2 gap-3">
-          <div className="grid gap-1.5">
-            <Label htmlFor="edit-weight">Peso</Label>
-            <Input
-              id="edit-weight"
-              inputMode="decimal"
-              value={form.weightValue}
-              onChange={(e) => setForm({ ...form, weightValue: e.target.value })}
-              className="num h-11 text-lg"
-            />
+        <DialogBody className="grid gap-4">
+          <div className="grid grid-cols-2 gap-3">
+            <div className="grid gap-1.5">
+              <Label htmlFor="edit-weight">Peso</Label>
+              <Input
+                id="edit-weight"
+                inputMode="decimal"
+                value={form.weightValue}
+                onChange={(e) => setForm({ ...form, weightValue: e.target.value })}
+                className="num h-11 text-lg"
+              />
+            </div>
+            <div className="grid gap-1.5">
+              <Label>Unidad</Label>
+              <Select
+                value={form.weightUnit}
+                onValueChange={(v) => setForm({ ...form, weightUnit: v as WeightUnit })}
+              >
+                <SelectTrigger className="h-11 w-full">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="lb">lb</SelectItem>
+                  <SelectItem value="kg">kg</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="grid gap-1.5">
+              <Label htmlFor="edit-reps">Repeticiones</Label>
+              <Input
+                id="edit-reps"
+                inputMode="numeric"
+                value={form.repetitions}
+                onChange={(e) => setForm({ ...form, repetitions: e.target.value })}
+                className="num h-11 text-lg"
+              />
+            </div>
+            <div className="grid gap-1.5">
+              <Label htmlFor="edit-rir">RIR</Label>
+              <Input
+                id="edit-rir"
+                inputMode="decimal"
+                placeholder="—"
+                value={form.rir}
+                onChange={(e) => setForm({ ...form, rir: e.target.value })}
+                className="num h-11 text-lg"
+              />
+            </div>
+            <div className="grid gap-1.5">
+              <Label>Tipo</Label>
+              <Select
+                value={form.setType}
+                onValueChange={(v) => setForm({ ...form, setType: v as SetType })}
+              >
+                <SelectTrigger className="h-11 w-full">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {Object.entries(SET_TYPE_LABELS).map(([value, label]) => (
+                    <SelectItem key={value} value={value}>
+                      {label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="grid gap-1.5">
+              <Label>Base del peso</Label>
+              <Select
+                value={form.weightBasis}
+                onValueChange={(v) => setForm({ ...form, weightBasis: v as WeightBasis })}
+              >
+                <SelectTrigger className="h-11 w-full">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {Object.entries(BASIS_LABELS).map(([value, label]) => (
+                    <SelectItem key={value} value={value}>
+                      {label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="col-span-2 grid gap-1.5">
+              <Label htmlFor="edit-reason">Motivo (opcional)</Label>
+              <Input
+                id="edit-reason"
+                placeholder="Ej. registré mal el peso"
+                value={form.reason}
+                onChange={(e) => setForm({ ...form, reason: e.target.value })}
+                className="h-11"
+              />
+            </div>
           </div>
-          <div className="grid gap-1.5">
-            <Label>Unidad</Label>
-            <Select
-              value={form.weightUnit}
-              onValueChange={(v) => setForm({ ...form, weightUnit: v as WeightUnit })}
-            >
-              <SelectTrigger className="h-11 w-full">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="lb">lb</SelectItem>
-                <SelectItem value="kg">kg</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-          <div className="grid gap-1.5">
-            <Label htmlFor="edit-reps">Repeticiones</Label>
-            <Input
-              id="edit-reps"
-              inputMode="numeric"
-              value={form.repetitions}
-              onChange={(e) => setForm({ ...form, repetitions: e.target.value })}
-              className="num h-11 text-lg"
-            />
-          </div>
-          <div className="grid gap-1.5">
-            <Label htmlFor="edit-rir">RIR</Label>
-            <Input
-              id="edit-rir"
-              inputMode="decimal"
-              placeholder="—"
-              value={form.rir}
-              onChange={(e) => setForm({ ...form, rir: e.target.value })}
-              className="num h-11 text-lg"
-            />
-          </div>
-          <div className="grid gap-1.5">
-            <Label>Tipo</Label>
-            <Select
-              value={form.setType}
-              onValueChange={(v) => setForm({ ...form, setType: v as SetType })}
-            >
-              <SelectTrigger className="h-11 w-full">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                {Object.entries(SET_TYPE_LABELS).map(([value, label]) => (
-                  <SelectItem key={value} value={value}>
-                    {label}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-          <div className="grid gap-1.5">
-            <Label>Base del peso</Label>
-            <Select
-              value={form.weightBasis}
-              onValueChange={(v) => setForm({ ...form, weightBasis: v as WeightBasis })}
-            >
-              <SelectTrigger className="h-11 w-full">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                {Object.entries(BASIS_LABELS).map(([value, label]) => (
-                  <SelectItem key={value} value={value}>
-                    {label}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-          <div className="col-span-2 grid gap-1.5">
-            <Label htmlFor="edit-reason">Motivo (opcional)</Label>
-            <Input
-              id="edit-reason"
-              placeholder="Ej. registré mal el peso"
-              value={form.reason}
-              onChange={(e) => setForm({ ...form, reason: e.target.value })}
-              className="h-11"
-            />
-          </div>
-        </div>
+        </DialogBody>
 
         <DialogFooter className="gap-2 sm:justify-between">
           {confirmDelete ? (
-            <Button variant="destructive" onClick={remove} disabled={processing}>
+            <Button variant="ABORT" onClick={remove} disabled={processing}>
               Confirmar eliminación
             </Button>
           ) : (
             <Button
-              variant="ghost"
+              variant="GHOST"
               className="text-destructive"
               onClick={() => setConfirmDelete(true)}
               disabled={processing}
@@ -207,7 +209,7 @@ export default function EditSetDialog({
               Eliminar serie
             </Button>
           )}
-          <Button onClick={save} disabled={processing}>
+          <Button variant="EXEC" onClick={save} disabled={processing}>
             {processing ? 'Guardando…' : 'Guardar corrección'}
           </Button>
         </DialogFooter>

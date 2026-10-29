@@ -40,7 +40,13 @@ export default function Login() {
               />
               {errors.password && <p className="text-sm text-destructive">{errors.password}</p>}
             </div>
-            <Button type="submit" size="lg" className="mt-2 h-11" disabled={processing}>
+            <Button
+              variant="EXEC"
+              type="submit"
+              size="LG"
+              className="mt-2 h-11"
+              disabled={processing}
+            >
               {processing ? 'Entrando…' : 'Entrar'}
             </Button>
           </>

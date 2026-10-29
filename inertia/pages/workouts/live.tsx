@@ -35,6 +35,7 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
+  DialogBody,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -142,7 +143,8 @@ export default function WorkoutLive({ session, catalog }: Props) {
           </div>
           {paused ? (
             <Button
-              size="sm"
+              variant="EXEC"
+              size="SM"
               onClick={() =>
                 router.post(
                   { route: 'workouts.resume', routeParams: { id: session.id } },
@@ -155,8 +157,8 @@ export default function WorkoutLive({ session, catalog }: Props) {
             </Button>
           ) : (
             <Button
-              size="sm"
-              variant="ghost"
+              size="SM"
+              variant="GHOST"
               onClick={() =>
                 router.post({ route: 'workouts.pause', routeParams: { id: session.id } }, {}, visit)
               }
@@ -167,7 +169,7 @@ export default function WorkoutLive({ session, catalog }: Props) {
           )}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button size="icon" variant="ghost" aria-label="Opciones de la sesión">
+              <Button size="ICON" variant="GHOST" aria-label="Opciones de la sesión">
                 <EllipsisVertical className="size-5" />
               </Button>
             </DropdownMenuTrigger>
@@ -210,8 +212,8 @@ export default function WorkoutLive({ session, catalog }: Props) {
           <div className="flex items-center justify-between gap-3 rounded-xl border border-warning/40 bg-warning/10 px-4 py-3 text-sm">
             <span>Sesión en pausa. El tiempo no corre.</span>
             <Button
-              size="sm"
-              variant="outline"
+              size="SM"
+              variant="OUTLINE"
               onClick={() =>
                 router.post(
                   { route: 'workouts.resume', routeParams: { id: session.id } },
@@ -272,13 +274,18 @@ export default function WorkoutLive({ session, catalog }: Props) {
             </p>
             <div className="mt-5 flex flex-col justify-center gap-2 sm:flex-row">
               {exercises.length > 0 && (
-                <Button size="lg" className="h-12" onClick={() => setFinishing(true)}>
+                <Button
+                  variant="EXEC"
+                  size="LG"
+                  className="h-12"
+                  onClick={() => setFinishing(true)}
+                >
                   Finalizar sesión
                 </Button>
               )}
               <Button
-                size="lg"
-                variant="outline"
+                size="LG"
+                variant="OUTLINE"
                 className="h-12"
                 onClick={() => setPicker({ mode: 'add' })}
               >
@@ -321,7 +328,7 @@ export default function WorkoutLive({ session, catalog }: Props) {
               Pendientes{' '}
               <span className="font-normal text-muted-foreground">· {pending.length}</span>
             </h2>
-            <Button size="sm" variant="ghost" onClick={() => setPicker({ mode: 'add' })}>
+            <Button size="SM" variant="GHOST" onClick={() => setPicker({ mode: 'add' })}>
               <Plus className="size-4" /> Agregar
             </Button>
           </div>
@@ -391,7 +398,7 @@ export default function WorkoutLive({ session, catalog }: Props) {
           </p>
         )}
 
-        <Button variant="outline" size="lg" className="h-12" onClick={() => setFinishing(true)}>
+        <Button variant="OUTLINE" size="LG" className="h-12" onClick={() => setFinishing(true)}>
           <Square className="size-4" /> Finalizar sesión
         </Button>
       </main>
@@ -534,7 +541,7 @@ function CurrentExercise({
   }
 
   return (
-    <section className="overflow-hidden rounded-2xl border border-border bg-card">
+    <section className="clip-corner-md overflow-hidden border border-[var(--border-active)] bg-[var(--surface)]">
       <div className="flex items-start justify-between gap-3 px-4 pt-4 sm:px-5">
         <div className="min-w-0">
           <p className="text-xs font-medium text-muted-foreground">
@@ -542,7 +549,7 @@ function CurrentExercise({
             <span className="num">{totalSets}</span> · {exercise.targetRepsMin}–
             {exercise.targetRepsMax} reps
           </p>
-          <h1 className="mt-1 text-xl leading-tight font-semibold tracking-tight text-balance">
+          <h1 className="glow-green mt-1 text-lg leading-tight font-bold tracking-[0.08em] text-balance text-[var(--color-green)] uppercase">
             {exercise.exercise.name}
           </h1>
           {exercise.exercise.defaultWeightBasis !== 'total' && (
@@ -553,7 +560,7 @@ function CurrentExercise({
         </div>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button size="icon" variant="ghost" aria-label="Opciones del ejercicio">
+            <Button size="ICON" variant="GHOST" aria-label="Opciones del ejercicio">
               <EllipsisVertical className="size-5" />
             </Button>
           </DropdownMenuTrigger>
@@ -740,8 +747,9 @@ function CurrentExercise({
 
       <div className="p-4 sm:p-5">
         <Button
-          size="lg"
-          className="h-14 w-full text-base font-semibold"
+          variant="EXEC"
+          size="LG"
+          className="h-14 w-full bg-[var(--color-green)] text-[0.9rem] font-bold text-[var(--color-bg)] shadow-[var(--glow-green)]"
           onClick={submit}
           disabled={processing || reps === null}
         >
@@ -802,16 +810,16 @@ function PendingExercise({
         </span>
       </button>
       <Button
-        size="icon"
-        variant="ghost"
+        size="ICON"
+        variant="GHOST"
         onClick={onUp}
         aria-label={`Subir ${exercise.exercise.name}`}
       >
         <ArrowUp className="size-4" />
       </Button>
       <Button
-        size="icon"
-        variant="ghost"
+        size="ICON"
+        variant="GHOST"
         onClick={onDown}
         aria-label={`Bajar ${exercise.exercise.name}`}
       >
@@ -819,7 +827,7 @@ function PendingExercise({
       </Button>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button size="icon" variant="ghost" aria-label={`Opciones de ${exercise.exercise.name}`}>
+          <Button size="ICON" variant="GHOST" aria-label={`Opciones de ${exercise.exercise.name}`}>
             <EllipsisVertical className="size-4" />
           </Button>
         </DropdownMenuTrigger>
@@ -896,7 +904,7 @@ function DoneExercise({
               <SetRow key={set.id} set={set} onEdit={() => onEdit(set)} />
             ))}
           </ul>
-          <Button size="sm" variant="ghost" className="mt-1" onClick={onReopen}>
+          <Button size="SM" variant="GHOST" className="mt-1" onClick={onReopen}>
             {exercise.status === 'skipped' ? 'Retomar ejercicio' : 'Hacer otra serie'}
           </Button>
         </div>
@@ -932,26 +940,29 @@ function FinishDialog({
             .
           </DialogDescription>
         </DialogHeader>
-        <Textarea
-          placeholder="Notas de la sesión (opcional)"
-          value={notes}
-          onChange={(e) => setNotes(e.target.value)}
-          rows={3}
-        />
-        {unfinished.length > 0 && (
-          <div className="flex flex-wrap gap-1.5">
-            {unfinished.map((e) => (
-              <Badge key={e.id} variant="secondary">
-                {e.exercise.name}
-              </Badge>
-            ))}
-          </div>
-        )}
+        <DialogBody className="grid gap-4">
+          <Textarea
+            placeholder="Notas de la sesión (opcional)"
+            value={notes}
+            onChange={(e) => setNotes(e.target.value)}
+            rows={3}
+          />
+          {unfinished.length > 0 && (
+            <div className="flex flex-wrap gap-1.5">
+              {unfinished.map((e) => (
+                <Badge key={e.id} variant="OFFLINE">
+                  {e.exercise.name}
+                </Badge>
+              ))}
+            </div>
+          )}
+        </DialogBody>
         <DialogFooter>
-          <Button variant="ghost" onClick={() => onOpenChange(false)}>
+          <Button variant="GHOST" onClick={() => onOpenChange(false)}>
             Seguir entrenando
           </Button>
           <Button
+            variant="EXEC"
             disabled={processing || session.progress.loggedSets === 0}
             onClick={() => {
               setProcessing(true)

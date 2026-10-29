@@ -154,7 +154,7 @@ export default function HistoryPage({ history, calendar, filters, exercises, mus
         description={`${history.meta.total} sesiones registradas`}
         actions={
           selected.length === 2 ? (
-            <Button asChild>
+            <Button variant="EXEC" asChild>
               <Link route="history.compare" qs={{ a: selected[0], b: selected[1] }}>
                 <GitCompare className="size-4" /> Comparar
               </Link>
@@ -226,8 +226,8 @@ export default function HistoryPage({ history, calendar, filters, exercises, mus
           </div>
           {hasFilters && (
             <Button
-              variant="ghost"
-              size="sm"
+              variant="GHOST"
+              size="SM"
               className="mb-3"
               onClick={() =>
                 router.get('/history', { month: calendar.month }, { preserveScroll: true })
@@ -340,8 +340,8 @@ export default function HistoryPage({ history, calendar, filters, exercises, mus
               {history.meta.lastPage > 1 && (
                 <div className="mt-4 flex items-center justify-between text-sm">
                   <Button
-                    variant="outline"
-                    size="sm"
+                    variant="OUTLINE"
+                    size="SM"
                     disabled={history.meta.currentPage <= 1}
                     onClick={() => apply({ page: history.meta.currentPage - 1 })}
                   >
@@ -351,8 +351,8 @@ export default function HistoryPage({ history, calendar, filters, exercises, mus
                     {history.meta.currentPage} / {history.meta.lastPage}
                   </span>
                   <Button
-                    variant="outline"
-                    size="sm"
+                    variant="OUTLINE"
+                    size="SM"
                     disabled={history.meta.currentPage >= history.meta.lastPage}
                     onClick={() => apply({ page: history.meta.currentPage + 1 })}
                   >
@@ -374,10 +374,10 @@ function Flags({ row }: { row: HistoryRow }) {
   return (
     <span className="flex flex-wrap gap-1">
       {row.status !== 'completed' && <Badge>En curso</Badge>}
-      {row.source === 'import' && <Badge variant="outline">Importada</Badge>}
-      {row.dataQuality !== 'complete' && <Badge variant="outline">Parcial</Badge>}
-      {row.incompleteSets > 0 && <Badge variant="outline">{row.incompleteSets} sin datos</Badge>}
-      {row.dateConfidence !== 'exact' && <Badge variant="outline">Fecha aprox.</Badge>}
+      {row.source === 'import' && <Badge variant="OFFLINE">Importada</Badge>}
+      {row.dataQuality !== 'complete' && <Badge variant="OFFLINE">Parcial</Badge>}
+      {row.incompleteSets > 0 && <Badge variant="OFFLINE">{row.incompleteSets} sin datos</Badge>}
+      {row.dateConfidence !== 'exact' && <Badge variant="OFFLINE">Fecha aprox.</Badge>}
     </span>
   )
 }
@@ -411,13 +411,13 @@ function MonthCalendar({
   return (
     <section className="h-fit rounded-xl border border-border bg-card p-4">
       <div className="mb-3 flex items-center justify-between">
-        <Button size="icon" variant="ghost" onClick={() => shift(-1)} aria-label="Mes anterior">
+        <Button size="ICON" variant="GHOST" onClick={() => shift(-1)} aria-label="Mes anterior">
           <ChevronLeft className="size-4" />
         </Button>
         <h2 className="text-sm font-semibold first-letter:uppercase">
           {first.toLocaleDateString('es-MX', { month: 'long', year: 'numeric', timeZone: 'UTC' })}
         </h2>
-        <Button size="icon" variant="ghost" onClick={() => shift(1)} aria-label="Mes siguiente">
+        <Button size="ICON" variant="GHOST" onClick={() => shift(1)} aria-label="Mes siguiente">
           <ChevronRight className="size-4" />
         </Button>
       </div>

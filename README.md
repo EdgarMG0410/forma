@@ -4,7 +4,7 @@
 
 ## Stack
 
-AdonisJS 7 · Inertia + React 19 · Tailwind CSS v4 · shadcn/ui · Lucid + PostgreSQL · VineJS · AdonisJS Auth (sesión) · Recharts · TanStack Table · PWA (vite-plugin-pwa).
+AdonisJS 7 · Inertia + React 19 · Tailwind CSS v4 · [scificn/ui](https://www.scificn.dev) (tema Terminal) · Lucid + PostgreSQL · VineJS · AdonisJS Auth (sesión) · Recharts · TanStack Table · PWA (vite-plugin-pwa).
 
 ## Puesta en marcha
 

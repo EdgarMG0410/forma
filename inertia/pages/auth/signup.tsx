@@ -58,7 +58,13 @@ export default function Signup() {
                 <p className="text-sm text-destructive">{errors.passwordConfirmation}</p>
               )}
             </div>
-            <Button type="submit" size="lg" className="mt-2 h-11" disabled={processing}>
+            <Button
+              variant="EXEC"
+              type="submit"
+              size="LG"
+              className="mt-2 h-11"
+              disabled={processing}
+            >
               {processing ? 'Creando…' : 'Crear cuenta'}
             </Button>
           </>

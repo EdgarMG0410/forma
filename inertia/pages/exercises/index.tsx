@@ -38,7 +38,7 @@ export default function Exercises({ exercises, muscles }: Props) {
         title="Ejercicios"
         description={`${exercises.length} en tu biblioteca`}
         actions={
-          <Button onClick={() => setCreating(true)}>
+          <Button variant="EXEC" onClick={() => setCreating(true)}>
             <Plus className="size-4" /> Nuevo ejercicio
           </Button>
         }
@@ -80,7 +80,7 @@ export default function Exercises({ exercises, muscles }: Props) {
             >
               <div className="flex items-start justify-between gap-2">
                 <span className="font-medium">{e.name}</span>
-                {e.isCustom && <Badge variant="outline">Propio</Badge>}
+                {e.isCustom && <Badge variant="OFFLINE">Propio</Badge>}
               </div>
               <span className="mt-0.5 text-xs text-muted-foreground">
                 {EQUIPMENT_LABELS[e.equipment]} ·{' '}

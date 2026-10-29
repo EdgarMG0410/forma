@@ -111,8 +111,8 @@ export default function StartWorkout({ routines, recent }: Props) {
             {({ processing }) => (
               <Button
                 type="submit"
-                variant="outline"
-                size="lg"
+                variant="OUTLINE"
+                size="LG"
                 className="h-12 w-full"
                 disabled={processing}
               >

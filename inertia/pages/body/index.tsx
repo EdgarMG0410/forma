@@ -14,6 +14,7 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
+  DialogBody,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -89,7 +90,7 @@ export default function Body({ units, measurements }: Props) {
         title="Cuerpo"
         description="Tendencias de tus mediciones. No son diagnósticos médicos."
         actions={
-          <Button onClick={() => setEditing('new')}>
+          <Button variant="EXEC" onClick={() => setEditing('new')}>
             <Plus className="size-4" /> Nueva medición
           </Button>
         }
@@ -99,7 +100,11 @@ export default function Body({ units, measurements }: Props) {
         <EmptyState
           icon={Ruler}
           title="Sin mediciones"
-          action={<Button onClick={() => setEditing('new')}>Registrar la primera</Button>}
+          action={
+            <Button variant="EXEC" onClick={() => setEditing('new')}>
+              Registrar la primera
+            </Button>
+          }
         >
           Registra peso, porcentaje de grasa o medidas para ver su evolución.
         </EmptyState>
@@ -195,16 +200,16 @@ export default function Body({ units, measurements }: Props) {
                   </p>
                 </div>
                 <Button
-                  size="icon"
-                  variant="ghost"
+                  size="ICON"
+                  variant="GHOST"
                   onClick={() => setEditing(m)}
                   aria-label="Editar medición"
                 >
                   <Pencil className="size-4" />
                 </Button>
                 <Button
-                  size="icon"
-                  variant="ghost"
+                  size="ICON"
+                  variant="GHOST"
                   onClick={() =>
                     window.confirm('¿Eliminar esta medición?') &&
                     router.delete(
@@ -281,70 +286,72 @@ function MeasurementDialog({
             Deja vacío lo que no midas; no se rellena nada por ti.
           </DialogDescription>
         </DialogHeader>
-        <form
-          key={formKey}
-          id="measurement-form"
-          onSubmit={(e) => {
-            e.preventDefault()
-            submit(e.currentTarget)
-          }}
-          className="grid grid-cols-2 gap-3 sm:grid-cols-3"
-        >
-          <div className="col-span-2 grid gap-1.5 sm:col-span-1">
-            <Label htmlFor="m-date">Fecha</Label>
-            <Input
-              id="m-date"
-              name="measuredOn"
-              type="date"
-              required
-              defaultValue={existing?.measuredOn ?? new Date().toISOString().slice(0, 10)}
-              className="h-10"
-            />
-          </div>
-          <div className="grid gap-1.5">
-            <Label htmlFor="m-weight">Peso ({existing?.bodyWeightUnit ?? units.weight})</Label>
-            <Input
-              id="m-weight"
-              name="bodyWeight"
-              inputMode="decimal"
-              defaultValue={existing?.bodyWeight ?? ''}
-              className="num h-10"
-            />
-          </div>
-          <div className="grid gap-1.5">
-            <Label htmlFor="m-fat">% grasa</Label>
-            <Input
-              id="m-fat"
-              name="bodyFatPct"
-              inputMode="decimal"
-              defaultValue={existing?.bodyFatPct ?? ''}
-              className="num h-10"
-            />
-          </div>
-          {BODY_SITES.map((site) => (
-            <div key={site} className="grid gap-1.5">
-              <Label htmlFor={`m-${site}`}>
-                {SITE_LABELS[site]} ({lengthUnit})
-              </Label>
+        <DialogBody className="grid gap-4">
+          <form
+            key={formKey}
+            id="measurement-form"
+            onSubmit={(e) => {
+              e.preventDefault()
+              submit(e.currentTarget)
+            }}
+            className="grid grid-cols-2 gap-3 sm:grid-cols-3"
+          >
+            <div className="col-span-2 grid gap-1.5 sm:col-span-1">
+              <Label htmlFor="m-date">Fecha</Label>
               <Input
-                id={`m-${site}`}
-                name={site}
+                id="m-date"
+                name="measuredOn"
+                type="date"
+                required
+                defaultValue={existing?.measuredOn ?? new Date().toISOString().slice(0, 10)}
+                className="h-10"
+              />
+            </div>
+            <div className="grid gap-1.5">
+              <Label htmlFor="m-weight">Peso ({existing?.bodyWeightUnit ?? units.weight})</Label>
+              <Input
+                id="m-weight"
+                name="bodyWeight"
                 inputMode="decimal"
-                defaultValue={existing?.sites[site] ?? ''}
+                defaultValue={existing?.bodyWeight ?? ''}
                 className="num h-10"
               />
             </div>
-          ))}
-          <div className="col-span-2 grid gap-1.5 sm:col-span-3">
-            <Label htmlFor="m-notes">Notas</Label>
-            <Textarea id="m-notes" name="notes" rows={2} defaultValue={existing?.notes ?? ''} />
-          </div>
-        </form>
+            <div className="grid gap-1.5">
+              <Label htmlFor="m-fat">% grasa</Label>
+              <Input
+                id="m-fat"
+                name="bodyFatPct"
+                inputMode="decimal"
+                defaultValue={existing?.bodyFatPct ?? ''}
+                className="num h-10"
+              />
+            </div>
+            {BODY_SITES.map((site) => (
+              <div key={site} className="grid gap-1.5">
+                <Label htmlFor={`m-${site}`}>
+                  {SITE_LABELS[site]} ({lengthUnit})
+                </Label>
+                <Input
+                  id={`m-${site}`}
+                  name={site}
+                  inputMode="decimal"
+                  defaultValue={existing?.sites[site] ?? ''}
+                  className="num h-10"
+                />
+              </div>
+            ))}
+            <div className="col-span-2 grid gap-1.5 sm:col-span-3">
+              <Label htmlFor="m-notes">Notas</Label>
+              <Textarea id="m-notes" name="notes" rows={2} defaultValue={existing?.notes ?? ''} />
+            </div>
+          </form>
+        </DialogBody>
         <DialogFooter>
-          <Button variant="ghost" onClick={onClose}>
+          <Button variant="GHOST" onClick={onClose}>
             Cancelar
           </Button>
-          <Button type="submit" form="measurement-form" disabled={processing}>
+          <Button variant="EXEC" type="submit" form="measurement-form" disabled={processing}>
             {processing ? 'Guardando…' : 'Guardar'}
           </Button>
         </DialogFooter>

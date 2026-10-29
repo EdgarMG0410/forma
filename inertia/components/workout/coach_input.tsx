@@ -79,8 +79,8 @@ export default function CoachInput({
             </p>
             <div className="flex gap-2">
               <Button
-                size="sm"
-                variant="ghost"
+                size="SM"
+                variant="GHOST"
                 onClick={() =>
                   router.post(
                     { route: 'interpretations.reject', routeParams: { id: interpretation.id } },
@@ -92,7 +92,8 @@ export default function CoachInput({
                 <X className="size-4" /> Descartar
               </Button>
               <Button
-                size="sm"
+                variant="EXEC"
+                size="SM"
                 disabled={processing}
                 onClick={() => {
                   setProcessing(true)
@@ -148,7 +149,7 @@ export default function CoachInput({
         />
         <Button
           type="submit"
-          variant="outline"
+          variant="OUTLINE"
           disabled={processing || !message.trim()}
           className="h-10"
         >

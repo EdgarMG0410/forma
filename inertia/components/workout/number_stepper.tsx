@@ -70,7 +70,7 @@ export default function NumberStepper({
             const parsed = Number(raw)
             if (!Number.isNaN(parsed)) onChange(Math.min(max, parsed))
           }}
-          className="num w-full min-w-0 bg-transparent text-center text-4xl font-semibold outline-none placeholder:text-muted-foreground/40"
+          className="num glow-green w-full min-w-0 bg-transparent text-center text-4xl font-bold text-[var(--color-green)] caret-[var(--color-green)] outline-none placeholder:text-[var(--text-muted)]"
         />
         <button
           type="button"

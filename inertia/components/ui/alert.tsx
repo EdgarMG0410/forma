@@ -1,59 +1,98 @@
+// scificn/ui — alert (https://scificn.dev/components/alert). Copied source; ours to modify.
 import * as React from 'react'
 import { cva, type VariantProps } from 'class-variance-authority'
 import { cn } from '~/lib/utils'
 
 const alertVariants = cva(
-  'relative grid w-full grid-cols-[0_1fr] items-start gap-y-0.5 rounded-lg border px-4 py-3 text-sm has-[>svg]:grid-cols-[calc(var(--spacing)*4)_1fr] has-[>svg]:gap-x-3 [&>svg]:size-4 [&>svg]:translate-y-0.5 [&>svg]:text-current',
+  ['relative w-full', 'border border-solid border-l-[3px]', 'p-4', 'font-mono', 'rounded-none'],
   {
     variants: {
       variant: {
-        default: 'bg-card text-card-foreground',
-        destructive:
-          'bg-card text-destructive *:data-[slot=alert-description]:text-destructive/90 [&>svg]:text-current',
+        STATUS: ['border-[var(--border)]', 'border-l-[var(--color-green)]', 'bg-[var(--surface)]'],
+        WARNING: ['border-[var(--border)]', 'border-l-[var(--color-amber)]', 'bg-[var(--surface)]'],
+        CRITICAL: ['border-[var(--border)]', 'border-l-[var(--color-red)]', 'bg-[var(--surface)]'],
+        INFO: ['border-[var(--border)]', 'border-l-[var(--color-blue)]', 'bg-[var(--surface)]'],
       },
     },
-    defaultVariants: {
-      variant: 'default',
-    },
+    defaultVariants: { variant: 'STATUS' },
   }
 )
 
-function Alert({
-  className,
-  variant,
-  ...props
-}: React.ComponentProps<'div'> & VariantProps<typeof alertVariants>) {
-  return (
-    <div
-      data-slot="alert"
-      role="alert"
-      className={cn(alertVariants({ variant }), className)}
+const prefixMap = {
+  STATUS: { symbol: '◈', color: 'var(--color-green)', glow: 'var(--text-glow-green)' },
+  WARNING: { symbol: '⚠', color: 'var(--color-amber)', glow: 'var(--text-glow-amber)' },
+  CRITICAL: { symbol: '✕', color: 'var(--color-red)', glow: 'var(--text-glow-red)' },
+  INFO: { symbol: 'ℹ', color: 'var(--color-blue)', glow: 'var(--text-glow-blue)' },
+}
+
+export interface AlertProps
+  extends React.HTMLAttributes<HTMLDivElement>, VariantProps<typeof alertVariants> {}
+
+const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
+  ({ className, variant = 'STATUS', children, ...props }, ref) => {
+    const v = variant ?? 'STATUS'
+    const prefix = prefixMap[v]
+
+    return (
+      <div ref={ref} className={cn(alertVariants({ variant }), className)} role="alert" {...props}>
+        <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'flex-start' }}>
+          <span
+            style={{
+              color: prefix.color,
+              textShadow: prefix.glow,
+              fontSize: '0.85rem',
+              lineHeight: 1.5,
+              flexShrink: 0,
+            }}
+          >
+            {prefix.symbol}
+          </span>
+          <div style={{ flex: 1 }}>{children}</div>
+        </div>
+      </div>
+    )
+  }
+)
+Alert.displayName = 'Alert'
+
+/* ── AlertTitle ── */
+const AlertTitle = React.forwardRef<HTMLParagraphElement, React.HTMLAttributes<HTMLHeadingElement>>(
+  ({ className, style, ...props }, ref) => (
+    <h5
+      ref={ref}
+      className={cn(className)}
+      style={{
+        fontSize: '0.75rem',
+        fontWeight: 600,
+        color: 'var(--text-secondary)',
+        letterSpacing: '0.08em',
+        textTransform: 'uppercase',
+        marginBottom: '0.25rem',
+        ...style,
+      }}
       {...props}
     />
   )
-}
+)
+AlertTitle.displayName = 'AlertTitle'
 
-function AlertTitle({ className, ...props }: React.ComponentProps<'div'>) {
-  return (
-    <div
-      data-slot="alert-title"
-      className={cn('col-start-2 line-clamp-1 min-h-4 font-medium tracking-tight', className)}
-      {...props}
-    />
-  )
-}
+/* ── AlertDescription ── */
+const AlertDescription = React.forwardRef<
+  HTMLParagraphElement,
+  React.HTMLAttributes<HTMLParagraphElement>
+>(({ className, style, ...props }, ref) => (
+  <p
+    ref={ref}
+    className={cn(className)}
+    style={{
+      fontSize: '0.8rem',
+      color: 'var(--text-muted)',
+      lineHeight: 1.6,
+      ...style,
+    }}
+    {...props}
+  />
+))
+AlertDescription.displayName = 'AlertDescription'
 
-function AlertDescription({ className, ...props }: React.ComponentProps<'div'>) {
-  return (
-    <div
-      data-slot="alert-description"
-      className={cn(
-        'col-start-2 grid justify-items-start gap-1 text-sm text-muted-foreground [&_p]:leading-relaxed',
-        className
-      )}
-      {...props}
-    />
-  )
-}
-
-export { Alert, AlertTitle, AlertDescription }
+export { Alert, AlertTitle, AlertDescription, alertVariants }

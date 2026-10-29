@@ -14,7 +14,7 @@ export default function ServerError() {
         <p className="mt-2 text-sm text-muted-foreground">
           Tus datos están a salvo. Intenta de nuevo en un momento.
         </p>
-        <Button asChild className="mt-6">
+        <Button variant="EXEC" asChild className="mt-6">
           <Link route="dashboard">Ir al inicio</Link>
         </Button>
       </div>

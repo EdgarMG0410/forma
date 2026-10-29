@@ -1,10 +1,17 @@
+// scificn/ui — skeleton (https://scificn.dev/components/skeleton). Copied source; ours to modify.
+import * as React from 'react'
 import { cn } from '~/lib/utils'
 
-function Skeleton({ className, ...props }: React.ComponentProps<'div'>) {
+export interface SkeletonProps extends React.HTMLAttributes<HTMLDivElement> {}
+
+function Skeleton({ className, ...props }: SkeletonProps) {
   return (
     <div
-      data-slot="skeleton"
-      className={cn('animate-pulse rounded-md bg-accent', className)}
+      className={cn(
+        'animate-pulse bg-[var(--surface-raised)] border border-[var(--border)]',
+        'rounded-none',
+        className
+      )}
       {...props}
     />
   )

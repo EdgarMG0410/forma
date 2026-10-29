@@ -1,44 +1,67 @@
+// scificn/ui — badge (https://scificn.dev/components/badge). Copied source; ours to modify.
 import * as React from 'react'
 import { cva, type VariantProps } from 'class-variance-authority'
 import { cn } from '~/lib/utils'
-import { Slot } from 'radix-ui'
 
 const badgeVariants = cva(
-  'inline-flex w-fit shrink-0 items-center justify-center gap-1 overflow-hidden rounded-full border border-transparent px-2 py-0.5 text-xs font-medium whitespace-nowrap transition-[color,box-shadow] focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 [&>svg]:pointer-events-none [&>svg]:size-3',
+  [
+    'inline-flex items-center gap-1.5',
+    'px-2 py-0.5',
+    'text-[0.65rem] font-mono font-medium uppercase tracking-widest',
+    'border border-solid',
+    'rounded-none',
+    'whitespace-nowrap',
+  ],
   {
     variants: {
       variant: {
-        default: 'bg-primary text-primary-foreground [a&]:hover:bg-primary/90',
-        secondary: 'bg-secondary text-secondary-foreground [a&]:hover:bg-secondary/90',
-        destructive:
-          'bg-destructive text-white focus-visible:ring-destructive/20 dark:bg-destructive/60 dark:focus-visible:ring-destructive/40 [a&]:hover:bg-destructive/90',
-        outline:
-          'border-border text-foreground [a&]:hover:bg-accent [a&]:hover:text-accent-foreground',
-        ghost: '[a&]:hover:bg-accent [a&]:hover:text-accent-foreground',
-        link: 'text-primary underline-offset-4 [a&]:hover:underline',
+        ACTIVE: ['border-[var(--color-green)]', 'text-[var(--color-green)]'],
+        OFFLINE: ['border-[var(--border)]', 'text-[var(--text-muted)]'],
+        WARNING: ['border-[var(--color-amber)]', 'text-[var(--color-amber)]'],
+        CRITICAL: ['border-[var(--color-red)]', 'text-[var(--color-red)]'],
+        SCANNING: ['border-[var(--color-green)]', 'text-[var(--color-green)]'],
       },
     },
     defaultVariants: {
-      variant: 'default',
+      variant: 'ACTIVE',
     },
   }
 )
 
-function Badge({
-  className,
-  variant = 'default',
-  asChild = false,
-  ...props
-}: React.ComponentProps<'span'> & VariantProps<typeof badgeVariants> & { asChild?: boolean }) {
-  const Comp = asChild ? Slot.Root : 'span'
+export interface BadgeProps
+  extends React.HTMLAttributes<HTMLSpanElement>, VariantProps<typeof badgeVariants> {}
+
+function Badge({ className, variant, children, ...props }: BadgeProps) {
+  const isScanning = variant === 'SCANNING'
 
   return (
-    <Comp
-      data-slot="badge"
-      data-variant={variant}
+    <span
       className={cn(badgeVariants({ variant }), className)}
+      style={
+        variant === 'ACTIVE'
+          ? { textShadow: 'var(--text-glow-green)', boxShadow: 'inset 0 0 8px #00ed3f11' }
+          : variant === 'CRITICAL'
+            ? { textShadow: 'var(--text-glow-red)', boxShadow: 'inset 0 0 8px #cc220011' }
+            : undefined
+      }
       {...props}
-    />
+    >
+      {isScanning && (
+        <span
+          style={{
+            display: 'inline-block',
+            animation: 'blink-cursor 1s step-end infinite',
+          }}
+        >
+          ●
+        </span>
+      )}
+      {!isScanning && variant === 'ACTIVE' && <span>●</span>}
+      {!isScanning && variant === 'OFFLINE' && <span>○</span>}
+      {!isScanning && variant === 'WARNING' && <span>⚠</span>}
+      {!isScanning && variant === 'CRITICAL' && <span>✕</span>}
+      {children}
+    </span>
   )
 }
 

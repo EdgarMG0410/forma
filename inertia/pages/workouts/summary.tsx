@@ -77,24 +77,24 @@ export default function WorkoutSummary({ summary, shared, aiAvailable }: Props) 
         </p>
         <h1 className="mt-1 text-2xl font-semibold tracking-tight lg:text-3xl">{session.name}</h1>
         <div className="mt-2 flex flex-wrap gap-1.5">
-          {session.source === 'import' && <Badge variant="outline">Importada</Badge>}
+          {session.source === 'import' && <Badge variant="OFFLINE">Importada</Badge>}
           {session.dataQuality !== 'complete' && (
-            <Badge variant="outline">
+            <Badge variant="OFFLINE">
               Datos {session.dataQuality === 'partial' ? 'parciales' : 'incompletos'}
             </Badge>
           )}
-          {session.dateConfidence !== 'exact' && <Badge variant="outline">Fecha aproximada</Badge>}
+          {session.dateConfidence !== 'exact' && <Badge variant="OFFLINE">Fecha aproximada</Badge>}
         </div>
         {!shared && (
           <div className="mt-4 flex flex-wrap gap-2">
             {shareUrl ? (
               <>
-                <Button variant="outline" onClick={copy}>
+                <Button variant="OUTLINE" onClick={copy}>
                   {copied ? <Check className="size-4" /> : <Copy className="size-4" />}{' '}
                   {copied ? 'Copiado' : 'Copiar enlace'}
                 </Button>
                 <Form route="workouts.unshare" routeParams={{ id: session.id }}>
-                  <Button variant="ghost" type="submit">
+                  <Button variant="GHOST" type="submit">
                     <Link2 className="size-4" /> Dejar de compartir
                   </Button>
                 </Form>
@@ -105,7 +105,7 @@ export default function WorkoutSummary({ summary, shared, aiAvailable }: Props) 
                 routeParams={{ id: session.id }}
                 options={{ preserveScroll: true }}
               >
-                <Button variant="outline" type="submit">
+                <Button variant="OUTLINE" type="submit">
                   <Share2 className="size-4" /> Compartir resumen
                 </Button>
               </Form>
@@ -117,14 +117,14 @@ export default function WorkoutSummary({ summary, shared, aiAvailable }: Props) 
                 options={{ preserveScroll: true }}
               >
                 {({ processing }) => (
-                  <Button variant="ghost" type="submit" disabled={processing}>
+                  <Button variant="GHOST" type="submit" disabled={processing}>
                     <Sparkles className="size-4" /> {processing ? 'Redactando…' : 'Resumen con IA'}
                   </Button>
                 )}
               </Form>
             )}
             <Form route="routines.from_session" routeParams={{ sessionId: session.id }}>
-              <Button variant="ghost" type="submit">
+              <Button variant="GHOST" type="submit">
                 <ListPlus className="size-4" /> Guardar como rutina
               </Button>
             </Form>
@@ -228,11 +228,11 @@ export default function WorkoutSummary({ summary, shared, aiAvailable }: Props) 
 
       {!shared && (
         <div className="mt-8 flex flex-wrap gap-2">
-          <Button asChild variant="outline">
+          <Button asChild variant="OUTLINE">
             <Link route="history.index">Ver historial</Link>
           </Button>
           {summary.comparison.previousSessionId && (
-            <Button asChild variant="ghost">
+            <Button asChild variant="GHOST">
               <Link
                 route="history.compare"
                 qs={{ a: summary.comparison.previousSessionId, b: session.id }}

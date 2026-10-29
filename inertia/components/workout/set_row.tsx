@@ -31,22 +31,22 @@ export default function SetRow({
       </span>
       <span className="flex items-center gap-1">
         {set.setType !== 'working' && (
-          <Badge variant="secondary" className="text-[10px]">
+          <Badge variant="OFFLINE" className="text-[10px]">
             {set.setType === 'warmup' ? 'Calent.' : 'Drop'}
           </Badge>
         )}
         {set.weightBasis === 'per_hand' && (
-          <Badge variant="outline" className="text-[10px]">
+          <Badge variant="OFFLINE" className="text-[10px]">
             por mano
           </Badge>
         )}
         {set.userCorrected && (
-          <Badge variant="outline" className="text-[10px]">
+          <Badge variant="OFFLINE" className="text-[10px]">
             corregida
           </Badge>
         )}
         {set.source === 'import' && (
-          <Badge variant="outline" className="text-[10px]">
+          <Badge variant="OFFLINE" className="text-[10px]">
             importada
           </Badge>
         )}

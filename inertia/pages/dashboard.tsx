@@ -21,17 +21,27 @@ export default function Dashboard({ dashboard }: { dashboard: DashboardData }) {
   return (
     <>
       <Head title="Inicio" />
-      <header className="mb-6 lg:mb-8">
-        <p className="text-sm text-muted-foreground">
+      <header className="mb-6 border-b border-[var(--border)] pb-4 lg:mb-8">
+        <p className="term-label">
           {date(new Date().toISOString(), { weekday: 'long', day: 'numeric', month: 'long' })}
+          {' // sistema listo'}
         </p>
-        <h1 className="mt-1 text-2xl font-semibold tracking-tight lg:text-3xl">
+        <h1 className="glow-green mt-2 text-xl font-bold tracking-[0.12em] text-[var(--color-green)] uppercase lg:text-2xl">
+          <span aria-hidden="true" className="mr-2 opacity-60">
+            &gt;
+          </span>
           {dashboard.greeting}
+          <span
+            aria-hidden="true"
+            className="ml-1 inline-block animate-[blink-cursor_1s_step-end_infinite]"
+          >
+            _
+          </span>
         </h1>
       </header>
 
       {/* Primary action */}
-      <section className="mb-6 overflow-hidden rounded-2xl border border-border bg-card">
+      <section className="clip-corner-md mb-6 overflow-hidden border border-[var(--border-active)] bg-[var(--surface)] shadow-[var(--glow-green)]">
         {live ? (
           <div className="flex flex-wrap items-center justify-between gap-4 p-5 sm:p-6">
             <div className="flex items-center gap-4">
@@ -46,7 +56,12 @@ export default function Dashboard({ dashboard }: { dashboard: DashboardData }) {
                 <p className="text-lg font-semibold">{live.name}</p>
               </div>
             </div>
-            <Button asChild size="lg" className="h-12 w-full px-6 text-base sm:w-auto">
+            <Button
+              variant="EXEC"
+              asChild
+              size="LG"
+              className="h-12 w-full px-6 text-base sm:w-auto"
+            >
               <Link route="workouts.show" routeParams={{ id: live.id }}>
                 Continuar <ArrowRight className="size-4" />
               </Link>
@@ -72,19 +87,29 @@ export default function Dashboard({ dashboard }: { dashboard: DashboardData }) {
               {suggested ? (
                 <Form route="workouts.store" className="flex-1 sm:flex-none">
                   <input type="hidden" name="templateId" value={suggested.id} />
-                  <Button type="submit" size="lg" className="h-12 w-full px-6 text-base">
+                  <Button
+                    variant="EXEC"
+                    type="submit"
+                    size="LG"
+                    className="h-12 w-full px-6 text-base"
+                  >
                     <Play className="size-4 fill-current" /> Iniciar entrenamiento
                   </Button>
                 </Form>
               ) : (
-                <Button asChild size="lg" className="h-12 flex-1 px-6 text-base sm:flex-none">
+                <Button
+                  variant="EXEC"
+                  asChild
+                  size="LG"
+                  className="h-12 flex-1 px-6 text-base sm:flex-none"
+                >
                   <Link route="workouts.create">
                     <Play className="size-4 fill-current" /> Iniciar entrenamiento
                   </Link>
                 </Button>
               )}
               {suggested && (
-                <Button asChild size="lg" variant="outline" className="h-12">
+                <Button asChild size="LG" variant="OUTLINE" className="h-12">
                   <Link route="workouts.create">Otra</Link>
                 </Button>
               )}
@@ -98,7 +123,7 @@ export default function Dashboard({ dashboard }: { dashboard: DashboardData }) {
           icon={Dumbbell}
           title="Tu historial empieza hoy"
           action={
-            <Button asChild variant="outline">
+            <Button asChild variant="OUTLINE">
               <Link route="routines.create">Crear una rutina</Link>
             </Button>
           }
@@ -149,10 +174,7 @@ export default function Dashboard({ dashboard }: { dashboard: DashboardData }) {
               <VolumeBars data={weekly} dataKey="volume" xKey="label" unit={unit} />
             </SectionCard>
 
-            <SectionCard
-              title="Músculos esta semana"
-              action={<span className="text-xs text-muted-foreground">series efectivas</span>}
-            >
+            <SectionCard title="Músculos · semana" action="series ef.">
               {muscles.length === 0 ? (
                 <p className="text-sm text-muted-foreground">Aún no hay series esta semana.</p>
               ) : (

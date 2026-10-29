@@ -14,7 +14,7 @@ export default function Routines({ routines }: { routines: RoutineCard[] }) {
         title="Rutinas"
         description="Plantillas que Forma usa para preparar tus series."
         actions={
-          <Button asChild>
+          <Button variant="EXEC" asChild>
             <Link route="routines.create">
               <Plus className="size-4" /> Nueva rutina
             </Link>
@@ -26,7 +26,7 @@ export default function Routines({ routines }: { routines: RoutineCard[] }) {
           icon={ListChecks}
           title="Sin rutinas todavía"
           action={
-            <Button asChild>
+            <Button variant="EXEC" asChild>
               <Link route="routines.create">Crear rutina</Link>
             </Button>
           }
@@ -46,7 +46,7 @@ export default function Routines({ routines }: { routines: RoutineCard[] }) {
                     {r.times > 0 && ` · ${r.times}×`}
                   </p>
                 </div>
-                <Button asChild size="icon" variant="ghost" aria-label={`Editar ${r.name}`}>
+                <Button asChild size="ICON" variant="GHOST" aria-label={`Editar ${r.name}`}>
                   <Link route="routines.edit" routeParams={{ id: r.id }}>
                     <Pencil className="size-4" />
                   </Link>
@@ -66,7 +66,12 @@ export default function Routines({ routines }: { routines: RoutineCard[] }) {
                 {({ processing }) => (
                   <>
                     <input type="hidden" name="templateId" value={r.id} />
-                    <Button type="submit" className="h-11 w-full" disabled={processing}>
+                    <Button
+                      variant="EXEC"
+                      type="submit"
+                      className="h-11 w-full"
+                      disabled={processing}
+                    >
                       <Play className="size-4 fill-current" /> Empezar
                     </Button>
                   </>

@@ -14,7 +14,7 @@ export default function NotFound() {
         <p className="mt-2 text-sm text-muted-foreground">
           Revisa la dirección o vuelve al inicio.
         </p>
-        <Button asChild className="mt-6">
+        <Button variant="EXEC" asChild className="mt-6">
           <Link route="dashboard">Ir al inicio</Link>
         </Button>
       </div>

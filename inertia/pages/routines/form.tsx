@@ -131,24 +131,24 @@ export default function RoutineEditor({ routine, catalog }: Props) {
                     {exercise?.name ?? 'Ejercicio'}
                   </span>
                   <Button
-                    size="icon"
-                    variant="ghost"
+                    size="ICON"
+                    variant="GHOST"
                     onClick={() => move(index, -1)}
                     aria-label="Subir"
                   >
                     <ArrowUp className="size-4" />
                   </Button>
                   <Button
-                    size="icon"
-                    variant="ghost"
+                    size="ICON"
+                    variant="GHOST"
                     onClick={() => move(index, 1)}
                     aria-label="Bajar"
                   >
                     <ArrowDown className="size-4" />
                   </Button>
                   <Button
-                    size="icon"
-                    variant="ghost"
+                    size="ICON"
+                    variant="GHOST"
                     onClick={() => setItems((l) => l.filter((i) => i.key !== item.key))}
                     aria-label="Quitar ejercicio"
                   >
@@ -205,8 +205,8 @@ export default function RoutineEditor({ routine, catalog }: Props) {
                         />
                       ))}
                       <Button
-                        size="icon"
-                        variant="ghost"
+                        size="ICON"
+                        variant="GHOST"
                         disabled={item.sets.length <= 1}
                         onClick={() =>
                           update(item.key, { sets: item.sets.filter((_, i) => i !== si) })
@@ -219,8 +219,8 @@ export default function RoutineEditor({ routine, catalog }: Props) {
                   ))}
                   <div className="flex flex-wrap items-center gap-3 pt-1">
                     <Button
-                      size="sm"
-                      variant="ghost"
+                      size="SM"
+                      variant="GHOST"
                       onClick={() =>
                         update(item.key, { sets: [...item.sets, defaultSet(item.sets.at(-1))] })
                       }
@@ -247,8 +247,8 @@ export default function RoutineEditor({ routine, catalog }: Props) {
             )
           })}
           <Button
-            variant="outline"
-            size="lg"
+            variant="OUTLINE"
+            size="LG"
             className="h-12 border-dashed"
             onClick={() => setPicking(true)}
           >
@@ -262,7 +262,7 @@ export default function RoutineEditor({ routine, catalog }: Props) {
         <div className="flex flex-wrap justify-between gap-2">
           {routine ? (
             <Button
-              variant="ghost"
+              variant="GHOST"
               className="text-destructive"
               onClick={() =>
                 window.confirm('¿Archivar esta rutina? Las sesiones pasadas no cambian.') &&
@@ -275,7 +275,8 @@ export default function RoutineEditor({ routine, catalog }: Props) {
             <span />
           )}
           <Button
-            size="lg"
+            variant="EXEC"
+            size="LG"
             onClick={save}
             disabled={processing || name.trim().length < 2 || items.length === 0}
           >

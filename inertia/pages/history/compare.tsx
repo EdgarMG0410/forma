@@ -23,7 +23,7 @@ export default function Compare({ left, right }: Props) {
           icon={GitCompare}
           title="No se pudieron comparar"
           action={
-            <Button asChild variant="outline">
+            <Button asChild variant="OUTLINE">
               <Link route="history.index">Volver al historial</Link>
             </Button>
           }
@@ -55,7 +55,7 @@ export default function Compare({ left, right }: Props) {
       <PageHeader
         title="Comparar sesiones"
         actions={
-          <Button asChild variant="ghost">
+          <Button asChild variant="GHOST">
             <Link route="history.index">
               <ArrowLeft className="size-4" /> Historial
             </Link>

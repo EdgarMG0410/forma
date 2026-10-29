@@ -115,7 +115,7 @@ export default function ImportPage({ preview, catalog, batches }: Props) {
                       {(errors as Record<string, string>).file}
                     </p>
                   )}
-                  <Button type="submit" disabled={uploading}>
+                  <Button variant="EXEC" type="submit" disabled={uploading}>
                     <Upload className="size-4" /> {uploading ? 'Analizando…' : 'Ver vista previa'}
                   </Button>
                 </>
@@ -151,13 +151,21 @@ export default function ImportPage({ preview, catalog, batches }: Props) {
                       )}
                     </div>
                     <div className="flex items-center gap-2">
-                      <Badge variant={b.status === 'imported' ? 'default' : 'outline'}>
+                      <Badge
+                        variant={
+                          b.status === 'imported'
+                            ? 'ACTIVE'
+                            : b.status === 'failed'
+                              ? 'CRITICAL'
+                              : 'OFFLINE'
+                        }
+                      >
                         {STATUS_LABEL[b.status] ?? b.status}
                       </Badge>
                       {b.status === 'imported' && (
                         <Button
-                          size="sm"
-                          variant="ghost"
+                          size="SM"
+                          variant="GHOST"
                           onClick={() =>
                             window.confirm(
                               '¿Revertir este lote? Se borra lo que creó; lo que hayas corregido después se conserva.'
@@ -266,12 +274,12 @@ export default function ImportPage({ preview, catalog, batches }: Props) {
                     ))}
                   </div>
                   <div className="flex flex-wrap gap-1">
-                    <Badge variant={s.action === 'skip' ? 'outline' : 'secondary'}>
+                    <Badge variant={s.action === 'skip' ? 'WARNING' : 'OFFLINE'}>
                       {ACTION_LABEL[s.action]}
                     </Badge>
-                    {s.status === 'partial' && <Badge variant="outline">Parcial</Badge>}
+                    {s.status === 'partial' && <Badge variant="OFFLINE">Parcial</Badge>}
                     {s.dateConfidence !== 'exact' && (
-                      <Badge variant="outline">Fecha {s.dateConfidence}</Badge>
+                      <Badge variant="OFFLINE">Fecha {s.dateConfidence}</Badge>
                     )}
                   </div>
                 </li>
@@ -280,10 +288,11 @@ export default function ImportPage({ preview, catalog, batches }: Props) {
           </SectionCard>
 
           <div className="flex flex-wrap justify-end gap-2">
-            <Button asChild variant="ghost">
+            <Button asChild variant="GHOST">
               <Link route="imports.index">Cancelar</Link>
             </Button>
             <Button
+              variant="EXEC"
               disabled={processing}
               onClick={() => {
                 setProcessing(true)

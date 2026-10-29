@@ -15,12 +15,7 @@ export default class InertiaMiddleware extends BaseInertiaMiddleware {
      * In that case, we must always assume that HttpContext is not fully hydrated
      * with all the properties
      */
-    const { auth, request } = ctx as Partial<HttpContext>
-
-    const theme: 'light' | 'dark' =
-      request?.plainCookie('forma_theme', { defaultValue: 'dark', encoded: false }) === 'light'
-        ? 'light'
-        : 'dark'
+    const { auth } = ctx as Partial<HttpContext>
 
     /**
      * Data shared with all Inertia pages. Make sure you are using
@@ -29,7 +24,6 @@ export default class InertiaMiddleware extends BaseInertiaMiddleware {
     return {
       errors: ctx.inertia.always(this.getValidationErrors(ctx)),
       user: ctx.inertia.always(auth?.user ? UserTransformer.transform(auth.user) : undefined),
-      preferences: ctx.inertia.always({ theme }),
       // drives the "sesión en curso" pill in the navigation from any page
       liveSession: ctx.inertia.always(await this.#liveSession(auth?.user?.id)),
     }

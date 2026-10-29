@@ -1,18 +1,24 @@
+// scificn/ui — label (https://scificn.dev/components/label). Copied source; ours to modify.
 import * as React from 'react'
+import * as LabelPrimitive from '@radix-ui/react-label'
 import { cn } from '~/lib/utils'
-import { Label as LabelPrimitive } from 'radix-ui'
 
-function Label({ className, ...props }: React.ComponentProps<typeof LabelPrimitive.Root>) {
-  return (
-    <LabelPrimitive.Root
-      data-slot="label"
-      className={cn(
-        'flex items-center gap-2 text-sm leading-none font-medium select-none group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:opacity-50 peer-disabled:cursor-not-allowed peer-disabled:opacity-50',
-        className
-      )}
-      {...props}
-    />
-  )
-}
+const Label = React.forwardRef<
+  React.ElementRef<typeof LabelPrimitive.Root>,
+  React.ComponentPropsWithoutRef<typeof LabelPrimitive.Root>
+>(({ className, ...props }, ref) => (
+  <LabelPrimitive.Root
+    ref={ref}
+    className={cn(
+      'text-[0.7rem] font-mono font-medium uppercase tracking-widest',
+      'text-[var(--text-secondary)]',
+      'peer-disabled:opacity-40 peer-disabled:cursor-not-allowed',
+      'select-none',
+      className
+    )}
+    {...props}
+  />
+))
+Label.displayName = LabelPrimitive.Root.displayName
 
 export { Label }

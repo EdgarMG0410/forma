@@ -1,6 +1,10 @@
 import { type ReactNode } from 'react'
+import { Panel, PanelContent, PanelHeader, PanelTitle } from '~/components/ui/panel'
 import { cn } from '~/lib/utils'
 
+/**
+ * A titled block of a page, on scificn's notched Panel.
+ */
 export default function SectionCard({
   title,
   action,
@@ -15,14 +19,18 @@ export default function SectionCard({
   bodyClassName?: string
 }) {
   return (
-    <section className={cn('rounded-xl border border-border bg-card', className)}>
+    <Panel notch="md" className={className}>
       {(title || action) && (
-        <div className="flex items-center justify-between gap-3 px-4 pt-4 sm:px-5">
-          {title && <h2 className="text-sm font-semibold">{title}</h2>}
-          {action}
-        </div>
+        <PanelHeader className="justify-between">
+          {title && <PanelTitle>{title}</PanelTitle>}
+          {action && (
+            <span className="flex items-center gap-2 text-[0.65rem] text-[var(--text-muted)]">
+              {action}
+            </span>
+          )}
+        </PanelHeader>
       )}
-      <div className={cn('p-4 sm:p-5', bodyClassName)}>{children}</div>
-    </section>
+      <PanelContent className={cn('p-4 sm:p-5', bodyClassName)}>{children}</PanelContent>
+    </Panel>
   )
 }

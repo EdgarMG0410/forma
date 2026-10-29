@@ -1,34 +1,94 @@
-'use client'
-
+// scificn/ui — switch (https://scificn.dev/components/switch). Copied source; ours to modify.
 import * as React from 'react'
+import * as SwitchPrimitive from '@radix-ui/react-switch'
 import { cn } from '~/lib/utils'
-import { Switch as SwitchPrimitive } from 'radix-ui'
 
-function Switch({
-  className,
-  size = 'default',
-  ...props
-}: React.ComponentProps<typeof SwitchPrimitive.Root> & {
-  size?: 'sm' | 'default'
-}) {
-  return (
-    <SwitchPrimitive.Root
-      data-slot="switch"
-      data-size={size}
-      className={cn(
-        'peer group/switch inline-flex shrink-0 items-center rounded-full border border-transparent shadow-xs transition-all outline-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:cursor-not-allowed disabled:opacity-50 data-[size=default]:h-[1.15rem] data-[size=default]:w-8 data-[size=sm]:h-3.5 data-[size=sm]:w-6 data-[state=checked]:bg-primary data-[state=unchecked]:bg-input dark:data-[state=unchecked]:bg-input/80',
-        className
-      )}
-      {...props}
-    >
-      <SwitchPrimitive.Thumb
-        data-slot="switch-thumb"
-        className={cn(
-          'pointer-events-none block rounded-full bg-background ring-0 transition-transform group-data-[size=default]/switch:size-4 group-data-[size=sm]/switch:size-3 data-[state=checked]:translate-x-[calc(100%-2px)] data-[state=unchecked]:translate-x-0 dark:data-[state=checked]:bg-primary-foreground dark:data-[state=unchecked]:bg-foreground'
-        )}
-      />
-    </SwitchPrimitive.Root>
-  )
+export interface SwitchProps extends React.ComponentPropsWithoutRef<typeof SwitchPrimitive.Root> {
+  label?: string
 }
+
+const Switch = React.forwardRef<React.ElementRef<typeof SwitchPrimitive.Root>, SwitchProps>(
+  ({ className, label, id, ...props }, ref) => {
+    const switchId = id ?? label?.toLowerCase().replace(/\s+/g, '-')
+
+    return (
+      <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.625rem' }}>
+        <SwitchPrimitive.Root
+          ref={ref}
+          id={switchId}
+          className={cn(
+            'group inline-flex items-center shrink-0',
+            'h-6 w-14',
+            'rounded-none',
+            'border border-[var(--border)]',
+            'bg-[var(--surface)]',
+            'cursor-pointer',
+            'focus-visible:outline-none',
+            'focus-visible:border-[var(--border-active)]',
+            'focus-visible:shadow-[var(--glow-green)]',
+            'disabled:cursor-not-allowed disabled:opacity-40',
+            'data-[state=checked]:border-[var(--color-green)]',
+            'data-[state=checked]:shadow-[var(--glow-green)]',
+            'transition-all duration-150',
+            'font-mono text-[0.6rem] tracking-widest',
+            'relative overflow-hidden',
+            className
+          )}
+          {...props}
+        >
+          {/* OFF label */}
+          <span
+            className="absolute left-1.5 select-none group-data-[state=checked]:opacity-0"
+            style={{
+              color: 'var(--text-muted)',
+              letterSpacing: '0.04em',
+              fontSize: '0.6rem',
+              transition: 'opacity 0.15s',
+            }}
+            aria-hidden="true"
+          >
+            [OFF]
+          </span>
+
+          <SwitchPrimitive.Thumb asChild>
+            {/* Invisible thumb — state is conveyed via root styles + text */}
+            <span style={{ display: 'none' }} />
+          </SwitchPrimitive.Thumb>
+
+          {/* ON label — shows when checked via CSS */}
+          <span
+            className="absolute right-1.5 select-none group-data-[state=unchecked]:opacity-0"
+            style={{
+              color: 'var(--color-green)',
+              textShadow: 'var(--text-glow-green)',
+              letterSpacing: '0.04em',
+              fontSize: '0.6rem',
+              transition: 'opacity 0.15s',
+            }}
+            aria-hidden="true"
+          >
+            [ON]
+          </span>
+        </SwitchPrimitive.Root>
+
+        {label && (
+          <label
+            htmlFor={switchId}
+            style={{
+              fontSize: '0.75rem',
+              color: 'var(--text-secondary)',
+              letterSpacing: '0.05em',
+              cursor: 'pointer',
+              userSelect: 'none',
+            }}
+          >
+            {label}
+          </label>
+        )}
+      </div>
+    )
+  }
+)
+Switch.displayName = SwitchPrimitive.Root.displayName
 
 export { Switch }
